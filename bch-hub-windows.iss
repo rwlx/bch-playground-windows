@@ -124,7 +124,7 @@ Filename: "{%APPDATA}\npm\pm2.cmd"; \
     StatusMsg: "Starting Node-RED service";
 
 ; Wait for Node-RED start
-Filename: {cmd}; Parameters: "/c timeout 15"; Flags: runasoriginaluser runhidden
+Filename: {cmd}; Parameters: "/c timeout 15"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Waiting for Node-RED start";
 
 ; Navigate web browser to local Node-RED
