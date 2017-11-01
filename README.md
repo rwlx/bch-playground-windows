@@ -9,46 +9,58 @@ Hub playground is based on:
   * The MQTT broker [Mosquitto](https://mosquitto.org) (with client tools)
   * The web-based tool [Node-RED](https://nodered.org) for automation flows
   * The process manager [PM2](http://pm2.keymetrics.io) to start the components automatically on boot
-  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway/) for BigClown USB Gateway - Python application for MQTT/gateway bridging
+  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway/) for BigClown [USB Dongle](https://shop.bigclown.com/products/usb-dongle) - Python application for MQTT/gateway bridging
   * [BigClown Firmware Flasher](https://github.com/bigclownlabs/bch-firmware-flasher/)
 
-Default install destination directory is `%ProgramFiles(x86)%` on 64bit OS or into `%ProgramFiles%` on 32bit OS (can be changed by user during installation).
+Install destination directories are in `%ProgramFiles(x86)%` on 64bit OS or in `%ProgramFiles%` on 32bit OS:
+
+  * `BigClown Hub` for scripts, Mosquitto and DFU
+  * `Python36-32` for Python3
+  * `nodejs` for Node.js
+
 Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownHub%` pointing to top level directory of installation.
 
-Set Hub enviroment paths and run `cmd.exe` shell by executing *BigClown Hub* from Start menu or by Desktop icon.
+Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownHubVersion%` with BigClown Hub version.
+
+Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Flasher.
+
+**BigClown Hub** can be executed by Desktop icon or from Start menu. Sets Hub enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
 
 
 ## Usage examples
 
-  * `bcf update`
-  * `bcf devices`
-  * `bcf flash bigclownlabs/bcf-usb-dongle:latest --device <COMxx>`
-  * `bcg --list`
-  * `pm2 start bcg --device <COMxx>`
-  * `pm2 list`
-  * `pub <topic> <payload>`
-  * `sub <topic> <payload>`
+  * `bcf update` - get list of BigClown firmware binaries form GitHub (*Integnet connectivity required*)
+  * `bcf devices` - list of available COM devices
+  * `bcf flash bigclownlabs/bcf-usb-dongle:latest --device <COMxx>` - flash latest USB Dongle firmware
+  * `bcg --list` - list of available COM devices
+  * `pm2 start bcg --device <COMxx>` - register and start BigClown Hub Service for BigClown USB Dongle
+  * `pm2 list` - list registered services
+  * `pub <topic> -m <payload>` e.g. `pub test/temperature -m 21` - MQTT publish 
+  * `sub <topic>` e.g. `sub #` - subscribe and listen for all MQTT topics
   * Navigate to local Node-RED http://localhost:1880/
 
 
 ## Components 
 32bit versions, drivers 32bit & 64bit:
-  * [Mosquitto 1.4.14](https://mosquitto.org)
+  * [Mosquitto v1.4.14](https://mosquitto.org)
     * `mosquitto\*`
-  * [Node.js 6.11.5 LTS](https://nodejs.org/en/download/) - OS wide install
-  * [Python 3.6.3](https://www.python.org/downloads/) - OS wide install
+    * Dependencies:
+      * [Win32OpenSSL v1.0.2L Light](https://slproweb.com/products/Win32OpenSSL.html)
+      * [pthreadVC2.dll](https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll)
+  * [Node.js v6.11.5 LTS](https://nodejs.org/en/download/) - OS wide install
+  * [Python v3.6.3](https://www.python.org/downloads/) - OS wide install
   * [Clink v0.4.8](https://github.com/mridgers/clink/) - OS wide install
   * [FTDI Virtual COM Port Drivers 2.12.28](http://www.ftdichip.com/Drivers/VCP.htm)
   * [dfu-util-static v0.8](https://sourceforge.net/projects/dfu-util/files/dfu-util-0.8-binaries/win32-mingw32/)
-    * `dfu\dfu-util.exe`  
+    * `dfu\dfu-util.exe`
   * [libwdi v1.2.5](https://github.com/pbatard/libwdi) WinUSB drivers for STM32 DFU
-    * `dfu\zadic.exe`
+    * `dfu\zadic.exe` - compiled by Microsoft Visual Studio Community Edition with Windows Driver Kit environment according [Compiling libwdi instructions](https://github.com/pbatard/libwdi/wiki/Compiling-and-debugging-libwdi-or-Zadig)
   * [Zadig v2.3](http://zadig.akeo.ie/) USB driver check&fix for STM32 DFU
     * `dfu\zadig-2.3.exe`
   * [STM32 Virtual COM Port Driver v1.4.0](http://www.st.com/en/development-tools/stsw-stm32102.html) - OS wide driver install
   * [BigClown Firmware Flasher v0.6.0](https://github.com/bigclownlabs/bch-firmware-flasher/) - *pip installed*
   * [BigClown Hub Service v1.8.0](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway - *pip installed*
-  * [Node-RED](https://nodered.org) - *npm installed*
+  * [Node-RED](https://nodered.org/) - *npm installed*
   * [PM2](http://pm2.keymetrics.io/) - *npm installed*
 
 

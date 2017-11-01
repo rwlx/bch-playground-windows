@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Hub"
-#define MyAppVersion "1.0.0-rc1"
+#define MyAppVersion "1.0.0-rc2"
 
 [Setup]
 SignTool=signtool
@@ -31,6 +31,7 @@ Source: "BigClown.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "CHANGELOG.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "script\bch.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
+Source: "script\bcf.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "script\pub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 
@@ -73,7 +74,7 @@ Filename: "msiexec.exe"; \
     StatusMsg: "Installing {#Nodejs}";
 
 ; Install Python3
-Filename: "{tmp}\{#Python}"; Parameters: "/passive InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
+Filename: "{tmp}\{#Python}"; Parameters: "/passive TargetDir=""{pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
     StatusMsg: "Installing {#Python}"
 
 ; Install bcf BigClown Firmware Flasher
@@ -137,11 +138,13 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
     ValueType: expandsz; ValueName: "BigClownHub"; ValueData: "{app}"; Flags: uninsdeletevalue
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
     ValueType: expandsz; ValueName: "BigClownHubVersion"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletevalue
-
-; Add Mosquitto into Path
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\mosquitto"; \
-    Check: NeedsAddPath('{app}\mosquitto');
+    ValueType: expandsz; ValueName: "BigClownFirmware"; ValueData: "{pf}\Python36-32\Scripts\bcf.exe"; Flags: uninsdeletevalue
+
+; Add BigClown Scripts into Path
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
+    ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\script"; \
+    Check: NeedsAddPath('{app}\script');
 
 ; Add DFU utils into Path
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
@@ -216,8 +219,7 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    RemovePath(ExpandConstant('{app}\mosquitto'));
-    RemovePath(ExpandConstant('{app}\dfu'));
+    RemovePath(ExpandConstant('{app}\script'));
   end;
 end;
 
