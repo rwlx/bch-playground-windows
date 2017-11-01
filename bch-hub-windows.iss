@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Hub"
-#define MyAppVersion "1.0.0-rc2"
+#define MyAppVersion "1.0.0-rc3"
 
 [Setup]
 SignTool=signtool
@@ -37,6 +37,7 @@ Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 
 ; Mosquitto
 Source: "mosquitto\*"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
+Source: "config\mosquitto.conf"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
 
 #define Nodejs "node-v6.11.5-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
@@ -74,7 +75,7 @@ Filename: "msiexec.exe"; \
     StatusMsg: "Installing {#Nodejs}";
 
 ; Install Python3
-Filename: "{tmp}\{#Python}"; Parameters: "/passive TargetDir=""{pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
+Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
     StatusMsg: "Installing {#Python}"
 
 ; Install bcf BigClown Firmware Flasher
@@ -114,8 +115,8 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
 
 ; Start Mosquitto service
 Filename: "{%APPDATA}\npm\pm2.cmd"; \
-    Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
-    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser; \
+    Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto -- -c mosquitto.conf"; \
+    WorkingDir: "{app}\mosquitto"; Flags: runasoriginaluser; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
 ; Start Mosquitto Node-RED

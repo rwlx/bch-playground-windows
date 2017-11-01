@@ -27,6 +27,14 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigC
 **BigClown Hub** can be executed by Desktop icon or from Start menu. Sets Hub enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
 
 
+## Configured services
+
+  * Node-RED web/application server on http://localhost:1880/
+  * Mosquitto MQTT broker
+    * mqtt on 1883
+    * mqtt over websockets on 8080, serves static web pages in `mosquitto\www` also.
+
+
 ## Usage examples
 
   * `bcf update` - get list of BigClown firmware binaries form GitHub (*Integnet connectivity required*)

@@ -1,3 +1,10 @@
+## [v1.0.0-rc3](https://github.com/bigclownlabs/bch-hub-windows/releases/tag/v1.0.0-rc3) (2017-11-01)
+
+ * Add MQTT over websockets on 8080 for Mosquitto
+ * Add static web pages for Mosquitto in www directory
+ * Fix Python3 DefaultAllUsersTargetDir
+ * Update README, Add services list
+
 ## [v1.0.0-rc2](https://github.com/bigclownlabs/bch-hub-windows/releases/tag/v1.0.0-rc2) (2017-11-01)
 
   * Add OpenSSL binary to Mosquitto installation
