@@ -7,7 +7,7 @@ cd mosquitto
 "%ProgramFiles%\7-Zip\7z.exe" x ..\mosquitto-1.4.14-install-win32.exe
 del uninstall.exe
 rem Mosquitto dependency pthreads
-powershell -Command "Invoke-WebRequest http://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll -OutFile pthreadVC2.dll"
+powershell -Command "Invoke-WebRequest https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll -OutFile pthreadVC2.dll"
 cd ..
 rem Mosquitto dependencies - OpenSSL_Light
 powershell -Command "Invoke-WebRequest https://slproweb.com/download/Win32OpenSSL_Light-1_0_2L.exe -OutFile Win32OpenSSL_Light-1_0_2L.exe"
