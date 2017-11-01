@@ -35,24 +35,21 @@ Set Hub enviroment paths and run `cmd.exe` shell by executing *BigClown Hub* fro
 32bit versions, drivers 32bit & 64bit:
   * [Mosquitto 1.4.14](https://mosquitto.org)
     * `mosquitto\*`
-  * [Node.js 6.11.5 LTS](https://nodejs.org/en/download/)
-    * OS wide install
-  * [Python 3.6.3](https://www.python.org/downloads/)
-    * OS wide install
-  * [Clink v0.4.8](https://github.com/mridgers/clink/)
+  * [Node.js 6.11.5 LTS](https://nodejs.org/en/download/) - OS wide install
+  * [Python 3.6.3](https://www.python.org/downloads/) - OS wide install
+  * [Clink v0.4.8](https://github.com/mridgers/clink/) - OS wide install
   * [FTDI Virtual COM Port Drivers 2.12.28](http://www.ftdichip.com/Drivers/VCP.htm)
   * [dfu-util-static v0.8](https://sourceforge.net/projects/dfu-util/files/dfu-util-0.8-binaries/win32-mingw32/)
+    * `dfu\dfu-util.exe`  
   * [libwdi v1.2.5](https://github.com/pbatard/libwdi) WinUSB drivers for STM32 DFU
+    * `dfu\zadic.exe`
   * [Zadig v2.3](http://zadig.akeo.ie/) USB driver check&fix for STM32 DFU
-  * [STM32 Virtual COM Port Driver v1.4.0](http://www.st.com/en/development-tools/stsw-stm32102.html)
-  * [BigClown Firmware Flasher v0.6.0](https://github.com/bigclownlabs/bch-firmware-flasher/)
-    * *pip installed*
-  * [BigClown Hub Service v1.8.0](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway
-    * *pip installed*
-  * [Node-RED](https://nodered.org)
-    * *npm installed*
-  * [PM2](http://pm2.keymetrics.io/)
-    * *npm installed*
+    * `dfu\zadig-2.3.exe`
+  * [STM32 Virtual COM Port Driver v1.4.0](http://www.st.com/en/development-tools/stsw-stm32102.html) - OS wide driver install
+  * [BigClown Firmware Flasher v0.6.0](https://github.com/bigclownlabs/bch-firmware-flasher/) - *pip installed*
+  * [BigClown Hub Service v1.8.0](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway - *pip installed*
+  * [Node-RED](https://nodered.org) - *npm installed*
+  * [PM2](http://pm2.keymetrics.io/) - *npm installed*
 
 
 ## Build prerequisites
