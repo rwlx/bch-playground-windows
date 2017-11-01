@@ -28,7 +28,7 @@ Set Hub enviroment paths and run `cmd.exe` shell by executing *BigClown Hub* fro
   * `pm2 list`
   * `pub <topic> <payload>`
   * `sub <topic> <payload>`
-  * Navigate to local [Node-RED](http://localhost:1880/)
+  * Navigate to local Node-RED http://localhost:1880/
 
 
 ## Components 
