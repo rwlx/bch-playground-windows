@@ -32,7 +32,6 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigC
   * Node-RED web/application server on http://localhost:1880/
   * Mosquitto MQTT broker
     * mqtt on 1883
-    * mqtt over websockets on 8080, serves static web pages in `mosquitto\www` also.
 
 
 ## Usage examples

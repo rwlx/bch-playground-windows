@@ -37,7 +37,6 @@ Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 
 ; Mosquitto
 Source: "mosquitto\*"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
-Source: "config\mosquitto.conf"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
 
 #define Nodejs "node-v6.11.5-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
@@ -115,7 +114,7 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
 
 ; Start Mosquitto service
 Filename: "{%APPDATA}\npm\pm2.cmd"; \
-    Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto -- -c mosquitto.conf"; \
+    Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
     WorkingDir: "{app}\mosquitto"; Flags: runasoriginaluser; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
