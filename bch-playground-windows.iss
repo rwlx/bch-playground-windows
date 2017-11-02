@@ -89,9 +89,9 @@ Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
 Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
     StatusMsg: "Installing {#Python}"
 
-; Install bcf BigClown Firmware Flasher
+; Install bcf BigClown Firmware Tool
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
-    StatusMsg: "Installing BigClown Firmware Flasher"; \
+    StatusMsg: "Installing BigClown Firmware Tool"; \
     Flags: runhidden
 
 ; Install bcf BigClown Gateway

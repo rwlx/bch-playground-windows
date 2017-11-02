@@ -12,7 +12,7 @@ Hub playground is based on:
   * The web-based tool [Node-RED](https://nodered.org) for automation flows
   * The process manager [PM2](http://pm2.keymetrics.io) to start the components automatically on boot
   * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway/) for BigClown [USB Dongle](https://shop.bigclown.com/products/usb-dongle) - Python application for MQTT/gateway bridging
-  * [BigClown Firmware Flasher](https://github.com/bigclownlabs/bch-firmware-flasher/)
+  * [BigClown Firmware Tool](https://github.com/bigclownlabs/bch-firmware-tool/)
 
 Install destination directories are in `%ProgramFiles(x86)%` on 64bit OS or in `%ProgramFiles%` on 32bit OS:
 
@@ -24,7 +24,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
 
   * `%BigClownPlayground%` pointing to top level directory of installation.
   * `%BigClownPlaygroundVersion%` with BigClown Playground version.
-  * `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Flasher.
+  * `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Tool.
 
 **BigClown Playground** can be executed by Desktop icon or from Start menu. Sets Playground enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
 
@@ -67,10 +67,10 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
   * [Zadig v2.3](http://zadig.akeo.ie/) USB driver check&fix for STM32 DFU
     * `dfu\zadig-2.3.exe`
   * [STM32 Virtual COM Port Driver v1.4.0](http://www.st.com/en/development-tools/stsw-stm32102.html) - OS wide driver install
-  * [BigClown Firmware Flasher v0.6.0](https://github.com/bigclownlabs/bch-firmware-flasher/) - *pip installed*
-  * [BigClown Hub Service v1.8.0](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway - *pip installed*
-  * [Node-RED](https://nodered.org/) - *npm installed*
-  * [PM2](http://pm2.keymetrics.io/) - *npm installed*
+  * [BigClown Firmware Tool](https://github.com/bigclownlabs/bch-firmware-tool/) - *pip installed*, up-to-date version from pip repository  
+  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway - *pip installed*, up-to-date version from pip repository
+  * [Node-RED](https://nodered.org/) - *npm installed*, up-to-date version from npm repository
+  * [PM2](http://pm2.keymetrics.io/) - *npm installed*, up-to-date version from npm repository
 
 
 ## Build prerequisites
