@@ -1,4 +1,4 @@
-# BigClown Hub/playground for Windows
+# BigClown Playground for Windows
 For Microsoft Windows 7, 8, 10 (32bit and 64bit).
 
 [BigClown Documentation](https://doc.bigclown.com/)
@@ -16,17 +16,17 @@ Hub playground is based on:
 
 Install destination directories are in `%ProgramFiles(x86)%` on 64bit OS or in `%ProgramFiles%` on 32bit OS:
 
-  * `BigClown Hub` for scripts, Mosquitto and DFU
+  * `BigClown Playground` for scripts, Mosquitto and DFU
   * `Python36-32` for Python3
   * `nodejs` for Node.js
 
-Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownHub%` pointing to top level directory of installation.
+Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
 
-Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownHubVersion%` with BigClown Hub version.
+  * `%BigClownPlayground%` pointing to top level directory of installation.
+  * `%BigClownPlaygroundVersion%` with BigClown Playground version.
+  * `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Flasher.
 
-Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Flasher.
-
-**BigClown Hub** can be executed by Desktop icon or from Start menu. Sets Hub enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
+**BigClown Playground** can be executed by Desktop icon or from Start menu. Sets Playground enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
 
 
 ## Configured services
@@ -88,6 +88,6 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variable `%BigC
 
   * install prerequisites
   * clone repository from GitHub (or unzip from release repository archive)
-  * change to `bch-hub-windows` directory
+  * change to `bch-playground-windows` directory
   * `download`
   * `build`

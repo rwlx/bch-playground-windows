@@ -1,27 +1,29 @@
-#define MyAppName "BigClown Hub"
-#define MyAppVersion "1.0.0-rc4"
+#define MyAppName "BigClown Playground"
+#define MyAppVersion "1.0.0-rc5"
 
 [Setup]
 SignTool=signtool
 PrivilegesRequired=admin
-AppId={{19CC80E2-23C5-4323-AC4C-152B723B9382}
+AppId={{BDCE012A-ABB1-402A-8E63-8D2DC786C1AD}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher="HARDWARIO s.r.o."
 AppPublisherURL="https://www.hardwario.com/"
 AppSupportURL="https://www.bigclown.com/contact/"
-AppUpdatesURL="https://github.com/bigclownlabs/bch-hub-windows"
+AppUpdatesURL="https://github.com/bigclownlabs/bch-playground-windows"
 UsePreviousAppDir=yes
-DefaultDirName={pf}\BigClown Hub
+DefaultDirName={pf}\BigClown Playground
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-OutputBaseFilename=bch-win-windows-v{#MyAppVersion}
+;DisableFinishedPage=yes
+OutputBaseFilename=bch-playground-windows-v{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 UninstallDisplayIcon={app}\BigClown.ico
 ChangesEnvironment=true
 ChangesAssociations=true
+RestartIfNeededByRun=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -30,7 +32,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Source: "BigClown.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "CHANGELOG.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "script\bch.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
+Source: "script\bcp.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "script\bcf.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "script\pub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
@@ -60,6 +62,7 @@ Source: "download\Virtual Com port driver V1.4.0.msi"; DestDir: "{tmp}";
 Source: "download\zadig-2.3.exe"; DestDir: "{app}\dfu"; DestName: "zadig.exe"; Flags: ignoreversion
 ; Multiple installations bloat PNP unfortunately, identify and delete all except one occurence
 ; pnputil /enumdrivers
+; pnputil /enumdrivers
 ; pnputil /deletedriver oemXX.inf
 Source: "download\zadic.exe"; DestDir: "{app}\dfu"; Flags: ignoreversion
 Source: "script\dfu-driver-install.cmd"; DestDir: "{app}\dfu"; Flags: ignoreversion
@@ -69,13 +72,14 @@ Source: "download\dfu-util-static.exe"; DestDir: "{app}\dfu"; DestName: "dfu-uti
 
 [Run]
 ; Uninstall Node.js
-Filename: "msiexec.exe"; Parameters: "/passive /norestart /x ""{tmp}\{#Nodejs}"""; \
+Filename: "msiexec.exe"; Parameters: "/x ""{tmp}\{#Nodejs}"" /passive /norestart"; \
+    WorkingDir: "{%USERPROFILE}"; \
     StatusMsg: "Trying to uninstall Node.js, if any"
 
 ; Install Node.js
-Filename: "msiexec.exe"; \
-    Parameters: "/passive /norestart /i ""{tmp}\{#Nodejs}"""; \
-    StatusMsg: "Installing {#Nodejs}";
+Filename: "msiexec.exe"; Parameters: "/i ""{tmp}\{#Nodejs}"" /passive /norestart"; \
+    WorkingDir: "{%USERPROFILE}"; \
+    StatusMsg: "Installing {#Nodejs}"
 
 ; Uninstall Python3
 Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
@@ -88,75 +92,75 @@ Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={p
 ; Install bcf BigClown Firmware Flasher
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
     StatusMsg: "Installing BigClown Firmware Flasher"; \
-    Flags: runhidden;
+    Flags: runhidden
 
 ; Install bcf BigClown Gateway
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
     StatusMsg: "Installing BigClown Gateway"; \
-    Flags: runhidden;
+    Flags: runhidden
 
 ; Install Node-RED
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g --unsafe-perm node-red"; \
     StatusMsg: "Installing Node-RED (it may take a few minutes)"; \
-    Flags: runhidden;
+    Flags: runhidden
 
 ; Install PM2
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
     StatusMsg: "Installing PM2 (it may take a few minutes)"; \
-    Flags: runhidden;
+    Flags: runhidden
 
 ; Install Clink
 Filename: "{tmp}\{#Clink}"; \
     Parameters: "/S"; \
-    StatusMsg: "Installing {#Clink}";
+    StatusMsg: "Installing {#Clink}"
 
 ; Install DFU Drivers
 Filename: "{app}\dfu\dfu-driver-install.cmd"; \
     StatusMsg: "Installing DFU Driver"; \
-    Flags: runhidden;
+    Flags: runhidden
 
 ; Install USB UART STM32 Virtual COM Port Driver
 Filename: "msiexec.exe"; \
     Parameters: "/i ""{tmp}\Virtual Com Port Driver V1.4.0.msi"" /passive /norestart"; \
-    StatusMsg: "Installing usb uart STM32 Virtual COM Port Driver";
+    StatusMsg: "Installing usb uart STM32 Virtual COM Port Driver"
 
 ; Install USB UART FTDI Virtual COM Port Drivers
 Filename: "{tmp}\CDM21228_Setup.exe"; \
-    StatusMsg: "Installing USB UART FTDI Virtual COM Port Drivers";
+    StatusMsg: "Installing USB UART FTDI Virtual COM Port Drivers"
 
 ; Start Mosquitto service
-Filename: "{%APPDATA}\npm\pm2.cmd"; \
-    Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
-; Start Mosquitto Node-RED
-Filename: "{%APPDATA}\npm\pm2.cmd"; \
-    Parameters: "start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"" -v"; \
+; Start Node-RED service
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"" -v"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Starting Node-RED service";
+    StatusMsg: "Starting Node-RED service"
 
 ; Wait for Node-RED start
 Filename: {cmd}; Parameters: "/c timeout 15"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Waiting for Node-RED start";
+    StatusMsg: "Waiting for Node-RED start"
 
 ; Navigate web browser to local Node-RED
 Filename: http://localhost:1880/; Flags: shellexec runasoriginaluser
 
 
 [Registry]
-; Store BigClown Hub installation directory into BigClown enviroment variable
+; Store BigClown Playground installation directory into BigClown enviroment variable
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "BigClownHub"; ValueData: "{app}"; Flags: uninsdeletevalue
+    ValueType: expandsz; ValueName: "BigClownPlayground"; ValueData: "{app}"; Flags: uninsdeletevalue
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
-    ValueType: expandsz; ValueName: "BigClownHubVersion"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletevalue
+    ValueType: expandsz; ValueName: "BigClownPlaygroundVersion"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletevalue
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
     ValueType: expandsz; ValueName: "BigClownFirmware"; ValueData: "{pf}\Python36-32\Scripts\bcf.exe"; Flags: uninsdeletevalue
 
 ; Add BigClown Scripts into Path
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
     ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\script"; \
-    Check: NeedsAddPath('{app}\script');
+    Check: NeedsAddPath('{app}\script')
 
 ; Add DFU utils into Path
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
@@ -166,21 +170,18 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
 
 [Icons]
 Name: "{commonprograms}\{#MyAppName}"; Filename: "{win}\system32\cmd.exe"; IconFilename: "{app}\BigClown.ico"; \
-    Parameters: "/K ""{app}\script\bch.cmd"""; WorkingDir: "{%USERPROFILE}"
+    Parameters: "/K ""{app}\script\bcp.cmd"""; WorkingDir: "{%USERPROFILE}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{win}\system32\cmd.exe"; IconFilename: "{app}\BigClown.ico"; \
-    Parameters: "/K ""{app}\script\bch.cmd"""; WorkingDir: "{%USERPROFILE}"
+    Parameters: "/K ""{app}\script\bcp.cmd"""; WorkingDir: "{%USERPROFILE}"
 
-; Stop Mosquitto and Node-RED services
 
 [Code]
 function InitializeSetup(): Boolean;
 var
    ResultCode: integer;
 begin
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', 
-   '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', 
-   '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Result := True;
 end;
 

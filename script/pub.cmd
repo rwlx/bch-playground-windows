@@ -1,4 +1,4 @@
 @echo off
-if exist "%BigClownHub%" (
-    "%BigClownHub%\mosquitto\mosquitto_pub" -t %*
+if exist "%BigClownPlayground%" (
+    "%BigClownPlayground%\mosquitto\mosquitto_pub" -t %*
 )
