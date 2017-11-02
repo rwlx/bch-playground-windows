@@ -5,6 +5,8 @@ For Microsoft Windows 7, 8, 10 (32bit and 64bit).
 
 NOTE: Internet connectivity is required during install for pip and npm package managers.
 
+WARNING: During installation installer tries to uninstall previously installed Python3 and Node.js because their installers can colide with previously installed versions under certain circumstances.
+
 Hub playground is based on:
   * The MQTT broker [Mosquitto](https://mosquitto.org) (with client tools)
   * The web-based tool [Node-RED](https://nodered.org) for automation flows

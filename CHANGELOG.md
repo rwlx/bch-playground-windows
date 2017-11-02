@@ -1,3 +1,8 @@
+## [v1.0.0-rc4](https://github.com/bigclownlabs/bch-hub-windows/releases/tag/v1.0.0-rc4) (2017-11-02)
+
+ * Try to uninstall Python3 and Node.js before installation
+ * Hide cmd script windows
+
 ## [v1.0.0-rc3](https://github.com/bigclownlabs/bch-hub-windows/releases/tag/v1.0.0-rc3) (2017-11-01)
 
  * Fix Python3 DefaultAllUsersTargetDir

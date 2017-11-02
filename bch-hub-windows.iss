@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Hub"
-#define MyAppVersion "1.0.0-rc3"
+#define MyAppVersion "1.0.0-rc4"
 
 [Setup]
 SignTool=signtool
@@ -68,10 +68,18 @@ Source: "download\dfu-util-static.exe"; DestDir: "{app}\dfu"; DestName: "dfu-uti
 
 
 [Run]
+; Uninstall Node.js
+Filename: "msiexec.exe"; Parameters: "/passive /norestart /x ""{tmp}\{#Nodejs}"""; \
+    StatusMsg: "Trying to uninstall Node.js, if any"
+
 ; Install Node.js
 Filename: "msiexec.exe"; \
-    Parameters: "/passive /i ""{tmp}\{#Nodejs}"""; \
+    Parameters: "/passive /norestart /i ""{tmp}\{#Nodejs}"""; \
     StatusMsg: "Installing {#Nodejs}";
+
+; Uninstall Python3
+Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
+    StatusMsg: "Trying to uninstall Python3, if any"
 
 ; Install Python3
 Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
@@ -79,19 +87,23 @@ Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={p
 
 ; Install bcf BigClown Firmware Flasher
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
-    StatusMsg: "Installing BigClown Firmware Flasher"
+    StatusMsg: "Installing BigClown Firmware Flasher"; \
+    Flags: runhidden;
 
 ; Install bcf BigClown Gateway
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
-    StatusMsg: "Installing BigClown Gateway"
+    StatusMsg: "Installing BigClown Gateway"; \
+    Flags: runhidden;
 
 ; Install Node-RED
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g --unsafe-perm node-red"; \
-    StatusMsg: "Installing Node-RED"
+    StatusMsg: "Installing Node-RED (it may take a few minutes)"; \
+    Flags: runhidden;
 
 ; Install PM2
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
-    StatusMsg: "Installing PM2";
+    StatusMsg: "Installing PM2 (it may take a few minutes)"; \
+    Flags: runhidden;
 
 ; Install Clink
 Filename: "{tmp}\{#Clink}"; \
@@ -101,7 +113,7 @@ Filename: "{tmp}\{#Clink}"; \
 ; Install DFU Drivers
 Filename: "{app}\dfu\dfu-driver-install.cmd"; \
     StatusMsg: "Installing DFU Driver"; \
-    Flags: runhidden
+    Flags: runhidden;
 
 ; Install USB UART STM32 Virtual COM Port Driver
 Filename: "msiexec.exe"; \
@@ -115,13 +127,13 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
 ; Start Mosquitto service
 Filename: "{%APPDATA}\npm\pm2.cmd"; \
     Parameters: "start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
-    WorkingDir: "{app}\mosquitto"; Flags: runasoriginaluser; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
 ; Start Mosquitto Node-RED
 Filename: "{%APPDATA}\npm\pm2.cmd"; \
     Parameters: "start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"" -v"; \
-    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Node-RED service";
 
 ; Wait for Node-RED start
@@ -158,10 +170,21 @@ Name: "{commonprograms}\{#MyAppName}"; Filename: "{win}\system32\cmd.exe"; IconF
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{win}\system32\cmd.exe"; IconFilename: "{app}\BigClown.ico"; \
     Parameters: "/K ""{app}\script\bch.cmd"""; WorkingDir: "{%USERPROFILE}"
 
+; Stop Mosquitto and Node-RED services
 
 [Code]
-const
-  EnvironmentKey = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
+function InitializeSetup(): Boolean;
+var
+   ResultCode: integer;
+begin
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', 
+   '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', 
+   '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+   Result := True;
+end;
+
+const EnvironmentKey = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
 
 {WARNING works for set of paths who are not substrings to each other}
 function NeedsAddPath(Param: string): boolean;
