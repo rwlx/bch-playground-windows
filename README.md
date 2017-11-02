@@ -5,6 +5,8 @@ For Microsoft Windows 7, 8, 10 (32bit and 64bit).
 
 NOTE: Internet connectivity is required during install for pip and npm package managers.
 
+NOTE: Windows firewall is configured to allow connections from all networks for Node.js and Mosquitto.
+
 WARNING: During installation installer tries to uninstall previously installed Python3 and Node.js because their installers can colide with previously installed versions under certain circumstances.
 
 Hub playground is based on:
@@ -56,6 +58,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
     * Dependencies:
       * [Win32OpenSSL v1.0.2L Light](https://slproweb.com/products/Win32OpenSSL.html)
       * [pthreadVC2.dll](https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll)
+      * msvcr100.dll
   * [Node.js v6.11.5 LTS](https://nodejs.org/en/download/) - OS wide install
   * [Python v3.6.3](https://www.python.org/downloads/) - OS wide install
   * [Clink v0.4.8](https://github.com/mridgers/clink/) - OS wide install
@@ -67,10 +70,13 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
   * [Zadig v2.3](http://zadig.akeo.ie/) USB driver check&fix for STM32 DFU
     * `dfu\zadig-2.3.exe`
   * [STM32 Virtual COM Port Driver v1.4.0](http://www.st.com/en/development-tools/stsw-stm32102.html) - OS wide driver install
-  * [BigClown Firmware Tool](https://github.com/bigclownlabs/bch-firmware-tool/) - *pip installed*, up-to-date version from pip repository  
-  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway - *pip installed*, up-to-date version from pip repository
-  * [Node-RED](https://nodered.org/) - *npm installed*, up-to-date version from npm repository
-  * [PM2](http://pm2.keymetrics.io/) - *npm installed*, up-to-date version from npm repository
+  * *pip installed*, up-to-date version from pip repository
+    * [BigClown Firmware Tool](https://github.com/bigclownlabs/bch-firmware-tool/)
+    * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway) for BigClown USB Gateway
+  * *npm installed*, up-to-date version from npm repository
+    * [Node-RED](https://nodered.org/)
+      * [Node-RED-Dashboard](https://github.com/node-red/node-red-dashboard)
+    * [PM2](http://pm2.keymetrics.io/)
 
 
 ## Build prerequisites

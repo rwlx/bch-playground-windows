@@ -1,3 +1,11 @@
+## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6) (2017-11-02)
+
+  * Add msvcr100.dll to Mosquitto
+  * Update BigClown Firmware Tool references (Tool instead of Flasher)
+  * Add autoconfiguration of Windows firewall
+  * Add Windows firewall configuration for Mosquitto and Node.js into installation
+  * Add https://github.com/node-red/node-red-dashboard
+
 ## [v1.0.0-rc5](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc5) (2017-11-02)
 
   * Rename repository to bch-playground-windows
