@@ -1,4 +1,4 @@
-## [v1.0.0-rc5](https://github.com/bigclownlabs/bch-hub-windows/releases/tag/v1.0.0-rc5) (2017-11-02)
+## [v1.0.0-rc5](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc5) (2017-11-02)
 
   * Rename repository to bch-playground-windows
   * Fix DFU driver install paths
