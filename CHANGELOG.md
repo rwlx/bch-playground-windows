@@ -1,3 +1,7 @@
+## [v1.0.0-rc7](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc7) (2017-11-09)
+
+  * Fix Node-RED instalation
+
 ## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6) (2017-11-02)
 
   * Add msvcr100.dll to Mosquitto

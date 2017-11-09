@@ -108,26 +108,6 @@ Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
 Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
     StatusMsg: "Installing {#Python}"
 
-; Install bcf BigClown Firmware Tool
-Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
-    StatusMsg: "Installing BigClown Firmware Tool"; \
-    Flags: runhidden
-
-; Install bcf BigClown Gateway
-Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
-    StatusMsg: "Installing BigClown Gateway"; \
-    Flags: runhidden
-
-; Install Node-RED
-Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install --unsafe-perm node-red"; \
-    StatusMsg: "Installing Node-RED (it may take a few minutes)"; \
-    Flags: runasoriginaluser runhidden
-
-; Install PM2
-Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
-    StatusMsg: "Installing PM2 (it may take a few minutes)"; \
-    Flags: runhidden
-
 ; Install Clink
 Filename: "{tmp}\{#Clink}"; \
     Parameters: "/S"; \
@@ -146,6 +126,26 @@ Filename: "msiexec.exe"; \
 ; Install USB UART FTDI Virtual COM Port Drivers
 Filename: "{tmp}\CDM21228_Setup.exe"; \
     StatusMsg: "Installing USB UART FTDI Virtual COM Port Drivers"
+
+; Install bcf BigClown Firmware Tool
+Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
+    StatusMsg: "Installing BigClown Firmware Tool, downloading by pip3"; \
+    Flags: runhidden
+
+; Install bcf BigClown Gateway
+Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
+    StatusMsg: "Installing BigClown Gateway, downloading by pip3"; \
+    Flags: runhidden
+
+; Install Node-RED
+Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install --unsafe-perm -g node-red"; \
+    StatusMsg: "Installing Node-RED (it may take a few minutes, downloading by npm)"; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden
+
+; Install PM2
+Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
+    StatusMsg: "Installing PM2 (it may take a few minutes, downloading by npm)"; \
+    WorkingDir: "{%USERPROFILE}";Flags: runasoriginaluser runhidden
 
 ; Start Mosquitto service
 Filename: "{pf}\nodejs\node.exe"; \
@@ -172,7 +172,7 @@ Filename: "{pf}\nodejs\node.exe"; \
 
 ; Install Node-RED-Dashboard
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install node-red-dashboard"; \
-    StatusMsg: "Installing Node-RED-Dashboard (it may take a few minutes)"; \
+    StatusMsg: "Installing Node-RED-Dashboard (it may take a few minutes, downloading by npm)"; \
     WorkingDir: "{%USERPROFILE}\.node-red"; \
     Flags: runasoriginaluser runhidden
 
@@ -181,6 +181,12 @@ Filename: "{pf}\nodejs\node.exe"; \
     Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start node-red"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Start Node-RED service"
+
+; Update available BigClown firmwares
+Filename: "{app}\script\bcf.cmd"; \
+    Parameters: "update"; \
+    StatusMsg: "Updating available BigClown firmwares"; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
 
 ; Wait for Node-RED start
 Filename: {cmd}; Parameters: "/c timeout 10"; Flags: runasoriginaluser runhidden; \
