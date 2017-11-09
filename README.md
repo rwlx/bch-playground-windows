@@ -1,3 +1,5 @@
+<a href="https://www.bigclown.com/"><img src="https://bigclown.sirv.com/logo.png" width="200" height="59" alt="BigClown Logo" align="right"></a>
+
 # BigClown Playground for Windows
 For Microsoft Windows 7, 8, 10 (32bit and 64bit).
 
@@ -97,3 +99,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
   * change to `bch-playground-windows` directory
   * `download`
   * `build`
+
+---
+
+Made with &#x2764;&nbsp; by [**HARDWARIO s.r.o.**](https://www.hardwario.com/) in the heart of Europe.
