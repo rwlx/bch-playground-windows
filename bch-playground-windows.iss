@@ -116,8 +116,7 @@ Filename: "{app}\dfu\dfu-driver-install.cmd"; \
     StatusMsg: "Installing DFU Driver"; \
     Flags: runhidden
 
-; pnputil.exe -e | Select-String -Context 2 'Driver package provider :\s+ STMicroelectronics' | ForEac
-h-Object { ($_.Context.PreContext[1] -split ' : +')[1] } | ForEach-Object {pnputil -d $_}
+; pnputil.exe -e | Select-String -Context 2 'Driver package provider :\s+ STMicroelectronics' | ForEach-Object { ($_.Context.PreContext[1] -split ' : +')[1] } | ForEach-Object {pnputil -d $_}
 ; Install USB UART STM32 Virtual COM Port Driver
 Filename: "msiexec.exe"; \
     Parameters: "/i ""{tmp}\Virtual Com Port Driver V1.4.0.msi"" /passive /norestart"; \

@@ -10,8 +10,8 @@ rem Mosquitto dependency pthreads
 powershell -Command "Invoke-WebRequest https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll -OutFile pthreadVC2.dll"
 cd ..
 rem Mosquitto dependencies - OpenSSL_Light
-powershell -Command "Invoke-WebRequest https://slproweb.com/download/Win32OpenSSL_Light-1_0_2L.exe -OutFile Win32OpenSSL_Light-1_0_2L.exe"
-Win32OpenSSL_Light-1_0_2L.exe /SILENT
+powershell -Command "Invoke-WebRequest https://slproweb.com/download/Win32OpenSSL_Light-1_0_2m.exe -OutFile Win32OpenSSL_Light-1_0_2m.exe"
+Win32OpenSSL_Light-1_0_2m.exe /SILENT
 rem copy C:\Windows\System32\ssleay32.dll mosquitto
 rem copy C:\Windows\System32\libeay32.dll mosquitto
 copy /Y C:\OpenSSL-Win32\*.dll mosquitto

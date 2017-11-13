@@ -58,7 +58,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
   * [Mosquitto v1.4.14](https://mosquitto.org)
     * `mosquitto\*`
     * Dependencies:
-      * [Win32OpenSSL v1.0.2L Light](https://slproweb.com/products/Win32OpenSSL.html)
+      * [Win32OpenSSL v1.0.2m Light](https://slproweb.com/products/Win32OpenSSL.html)
       * [pthreadVC2.dll](https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll)
       * msvcr100.dll
   * [Node.js v8.9.1 LTS](https://nodejs.org/en/download/) - OS wide install
