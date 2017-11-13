@@ -5,6 +5,9 @@
   * Upgrade Node.js to v8.9.1
   * Upgrade Win32OpenSSL Light to v1.0.2m
   * Set Unicode for console
+  * Fix bcf update during install
+  * Stop PM2 during uninstall
+  * Fix pnputils execution during DFU driver installation
 
 ## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6) (2017-11-02)
 

@@ -113,7 +113,8 @@ Filename: "{tmp}\{#Clink}"; \
 
 ; Install DFU Drivers
 Filename: "{app}\dfu\dfu-driver-install.cmd"; \
-    StatusMsg: "Installing DFU Driver"; \
+    WorkingDir: "{app}\dfu"; \
+    StatusMsg: "Installing DFU Driver";  \
     Flags: runhidden
 
 ; pnputil.exe -e | Select-String -Context 2 'Driver package provider :\s+ STMicroelectronics' | ForEach-Object { ($_.Context.PreContext[1] -split ' : +')[1] } | ForEach-Object {pnputil -d $_}
@@ -182,7 +183,7 @@ Filename: "{pf}\nodejs\node.exe"; \
     StatusMsg: "Start Node-RED service"
 
 ; Update available BigClown firmwares
-Filename: "{app}\script\bcf.cmd"; \
+Filename: "{pf}\Python36-32\Scripts\bcf.exe"; \
     Parameters: "update"; \
     StatusMsg: "Updating available BigClown firmwares"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
@@ -229,6 +230,7 @@ var
 begin
    Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete bcg', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Result := True;
 end;
 
@@ -296,3 +298,13 @@ end;
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
+
+[UninstallRun]
+Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete mosquitto"; Flags: runhidden; \
+  StatusMsg: "Stopping PM2 service mosquitto"
+Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete node-red"; Flags: runhidden; \
+  StatusMsg: "Stopping PM2 service mosquitto"
+Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete bcg"; Flags: runhidden; \
+  StatusMsg: "Stopping PM2 service mosquitto"  
+Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "kill"; Flags: runhidden; \
+  StatusMsg: "Stopping PM2"
