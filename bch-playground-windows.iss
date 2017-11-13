@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.0-rc6"
+#define MyAppVersion "1.0.0-rc7"
 
 [Setup]
 SignTool=signtool
@@ -62,9 +62,7 @@ Source: "download\Virtual Com port driver V1.4.0.msi"; DestDir: "{tmp}";
 ; http://zadig.akeo.ie/ https://github.com/pbatard/libwdi
 Source: "download\zadig-2.3.exe"; DestDir: "{app}\dfu"; DestName: "zadig.exe"; Flags: ignoreversion
 ; Multiple installations bloat PNP unfortunately, identify and delete all except one occurence
-; pnputil /enumdrivers
-; pnputil /enumdrivers
-; pnputil /deletedriver oemXX.inf
+; pnputil.exe /e | Select-String -Context 2 'Driver package provider :\s+ libwdi' | ForEach-Object { ($_.Context.PreContext[1] -split ' : +')[1] } | ForEach-Object {pnputil /d $_}
 Source: "download\zadic.exe"; DestDir: "{app}\dfu"; Flags: ignoreversion
 Source: "script\dfu-driver-install.cmd"; DestDir: "{app}\dfu"; Flags: ignoreversion
 ; https://sourceforge.net/projects/dfu-util/files/?source=navbar
@@ -118,6 +116,8 @@ Filename: "{app}\dfu\dfu-driver-install.cmd"; \
     StatusMsg: "Installing DFU Driver"; \
     Flags: runhidden
 
+; pnputil.exe -e | Select-String -Context 2 'Driver package provider :\s+ STMicroelectronics' | ForEac
+h-Object { ($_.Context.PreContext[1] -split ' : +')[1] } | ForEach-Object {pnputil -d $_}
 ; Install USB UART STM32 Virtual COM Port Driver
 Filename: "msiexec.exe"; \
     Parameters: "/i ""{tmp}\Virtual Com Port Driver V1.4.0.msi"" /passive /norestart"; \
