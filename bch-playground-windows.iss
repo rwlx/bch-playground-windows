@@ -41,7 +41,7 @@ Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "mosquitto\*"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
 Source: "download\msvcr100.dll"; DestDir: "{app}\mosquitto"; Flags: ignoreversion
 
-#define Nodejs "node-v6.11.5-x86.msi"
+#define Nodejs "node-v8.9.1-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
 
 #define Python "python-3.6.3.exe"

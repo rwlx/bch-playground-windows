@@ -2,6 +2,7 @@
 
   * Fix Node-RED instalation
   * Fix DFU driver installation - remove all libwdi drivers before installation
+  * Upgrade Node.js to v8.9.1
 
 ## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6) (2017-11-02)
 

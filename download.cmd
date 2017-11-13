@@ -16,8 +16,8 @@ rem copy C:\Windows\System32\ssleay32.dll mosquitto
 rem copy C:\Windows\System32\libeay32.dll mosquitto
 copy /Y C:\OpenSSL-Win32\*.dll mosquitto
 copy /Y C:\OpenSSL-Win32\bin\* mosquitto
-rem Node.js
-powershell -Command "Invoke-WebRequest https://nodejs.org/dist/v6.11.5/node-v6.11.5-x86.msi -OutFile node-v6.11.5-x86.msi"
+rem Node.js 
+powershell -Command "Invoke-WebRequest https://nodejs.org/dist/v8.9.1/node-v8.9.1-x86.msi -OutFile node-v8.9.1-x86.msi"
 rem Python
 powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe -OutFile python-3.6.3.exe"
 rem FTDI USB CDC/UART drivers
