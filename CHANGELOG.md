@@ -1,4 +1,8 @@
-## [v1.0.0-rc7](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc7) (2017-11-13)
+## [v1.0.0](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0)(2017-11-14)
+
+  * Add BigClownGateway environment variable
+
+## [v1.0.0-rc7](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc7)(2017-11-13)
 
   * Fix Node-RED instalation
   * Fix DFU driver installation - remove all libwdi drivers before installation
@@ -9,7 +13,7 @@
   * Stop PM2 during uninstall
   * Fix pnputils execution during DFU driver installation
 
-## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6) (2017-11-02)
+## [v1.0.0-rc6](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0-rc6)(2017-11-02)
 
   * Add msvcr100.dll to Mosquitto
   * Update BigClown Firmware Tool references (Tool instead of Flasher)

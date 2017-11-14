@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.0-rc7"
+#define MyAppVersion "1.0.0"
 
 [Setup]
 SignTool=signtool
@@ -204,6 +204,9 @@ Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environmen
     ValueType: expandsz; ValueName: "BigClownPlaygroundVersion"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletevalue
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
     ValueType: expandsz; ValueName: "BigClownFirmware"; ValueData: "{pf}\Python36-32\Scripts\bcf.exe"; Flags: uninsdeletevalue
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
+    ValueType: expandsz; ValueName: "BigClownGateway"; ValueData: "{pf}\Python36-32\lib\site-packages\bcg\gateway.py"; Flags: uninsdeletevalue
+
 
 ; Add BigClown Scripts into Path
 Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; \
