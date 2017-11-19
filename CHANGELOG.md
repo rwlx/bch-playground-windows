@@ -1,4 +1,4 @@
-## [v1.0.0](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0)(2017-11-14)
+## [v1.0.0](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0)(2017-11-19)
 
   * Add BigClownGateway environment variable
   * Fix DFU driver install - do not install libwdi driver if it is installed
