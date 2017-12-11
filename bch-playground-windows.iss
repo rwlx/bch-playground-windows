@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 
 [Setup]
 SignTool=signtool
@@ -41,7 +41,7 @@ Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "mosquitto\*"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
 Source: "download\msvcr100.dll"; DestDir: "{app}\mosquitto"; Flags: ignoreversion
 
-#define Nodejs "node-v8.9.1-x86.msi"
+#define Nodejs "node-v8.9.3-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
 
 #define Python "python-3.6.3.exe"
@@ -70,14 +70,13 @@ Source: "download\dfu-util-static.exe"; DestDir: "{app}\dfu"; DestName: "dfu-uti
 
 
 [Run]
-; Enable Windows firewall for Mosquitto
-;https://technet.microsoft.com/en-us/library/dd734783(v=ws.10).aspx
-Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Mosquitto"; \
-    StatusMsg: "Delete Windows firewall rules for Mosquitto"; Flags: runhidden
-Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Mosquitto dir=in action=allow program=""{app}\mosquitto\mosquitto.exe"" protocol=tcp profile=any edge=deferuser"; \
-    StatusMsg: "Enable Windows firewall for Mosquitto"; \
-    Flags: runhidden
-; netsh advfirewall firewall show rule name=Mosquitto
+; Uninstall Python3
+Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
+    StatusMsg: "Trying to uninstall Python3, if there is Python3 already installed"
+
+; Install Python3
+Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
+    StatusMsg: "Installing {#Python}"
 
 ; Uninstall Node.js
 Filename: "msiexec.exe"; Parameters: "/x ""{tmp}\{#Nodejs}"" /passive /norestart"; \
@@ -88,23 +87,6 @@ Filename: "msiexec.exe"; Parameters: "/x ""{tmp}\{#Nodejs}"" /passive /norestart
 Filename: "msiexec.exe"; Parameters: "/i ""{tmp}\{#Nodejs}"" /passive /norestart"; \
     WorkingDir: "{%USERPROFILE}"; \
     StatusMsg: "Installing {#Nodejs}"
-
-; Enable Windows firewall for Node.js
-Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Node.js"; \
-    StatusMsg: "Delete Windows firewall rules for Node.js"; Flags: runhidden
-Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Node.js dir=in action=allow program=""{pf}\nodejs\node.exe"" protocol=tcp profile=any edge=deferuser"; \
-    StatusMsg: "Enable Windows firewall for Node.js"; \
-    Flags: runhidden
-;netsh advfirewall firewall show rule name=Node.js
-;netsh advfirewall firewall show rule name="Node.js: Server-side JavaScript"
-
-; Uninstall Python3
-Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
-    StatusMsg: "Trying to uninstall Python3, if there is Python3 already installed"
-
-; Install Python3
-Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
-    StatusMsg: "Installing {#Python}"
 
 ; Install Clink
 Filename: "{tmp}\{#Clink}"; \
@@ -147,15 +129,39 @@ Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
     StatusMsg: "Installing PM2 (it may take a few minutes, downloading by npm)"; \
     WorkingDir: "{%USERPROFILE}";Flags: runasoriginaluser runhidden
 
+; Enable Windows firewall for Mosquitto
+;https://technet.microsoft.com/en-us/library/dd734783(v=ws.10).aspx
+Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Mosquitto"; \
+    StatusMsg: "Delete Windows firewall rules for Mosquitto"; Flags: runhidden
+Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Mosquitto dir=in action=allow program=""{app}\mosquitto\mosquitto.exe"" protocol=tcp profile=any edge=deferuser"; \
+    StatusMsg: "Enable Windows firewall for Mosquitto"; \
+    Flags: runhidden
+; netsh advfirewall firewall show rule name=Mosquitto
+
 ; Start Mosquitto service
 Filename: "{pf}\nodejs\node.exe"; \
     Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
+; Enable Windows firewall for Node.js Node-RED
+Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Node.js"; \
+    StatusMsg: "Delete Windows firewall rules for Node.js"; Flags: runhidden
+Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Node.js dir=in action=allow program=""{pf}\nodejs\node.exe"" protocol=tcp profile=any edge=deferuser"; \
+    StatusMsg: "Enable Windows firewall for Node.js"; \
+    Flags: runhidden
+;netsh advfirewall firewall show rule name=Node.js
+;netsh advfirewall firewall show rule name="Node.js: Server-side JavaScript"
+
 ; Start Node-RED service
 Filename: "{pf}\nodejs\node.exe"; \
     Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"" -v"; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
+    StatusMsg: "Starting Node-RED service"
+
+; Save PM2 configuration
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 save"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Node-RED service"
 
@@ -303,11 +309,11 @@ end;
 Type: filesandordirs; Name: "{app}"
 
 [UninstallRun]
-Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete mosquitto"; Flags: runhidden; \
+Filename: "{%APPDATA}\npm\pm2"; Parameters: "delete mosquitto"; Flags: runhidden; \
   StatusMsg: "Stopping PM2 service mosquitto"
-Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete node-red"; Flags: runhidden; \
+Filename: "{%APPDATA}\npm\pm2"; Parameters: "delete node-red"; Flags: runhidden; \
   StatusMsg: "Stopping PM2 service mosquitto"
-Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "delete bcg"; Flags: runhidden; \
+Filename: "{%APPDATA}\npm\pm2"; Parameters: "delete bcg"; Flags: runhidden; \
   StatusMsg: "Stopping PM2 service mosquitto"  
-Filename: "{%APPDATA}\npm\node_modules\pm2\bin\pm2"; Parameters: "kill"; Flags: runhidden; \
+Filename: "{%APPDATA}\npm\pm2"; Parameters: "kill"; Flags: runhidden; \
   StatusMsg: "Stopping PM2"

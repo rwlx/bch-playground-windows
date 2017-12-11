@@ -29,6 +29,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
   * `%BigClownPlayground%` pointing to top level directory of installation.
   * `%BigClownPlaygroundVersion%` with BigClown Playground version.
   * `%BigClownFirmware%` pointing to bcf.exe from BigClown Firmware Tool.
+  * `%BigClownGateway%` pointing to BigClow Gateway Python script.
 
 **BigClown Playground** can be executed by Desktop icon or from Start menu. Sets Playground enviroment paths for Mosquitto, dfu utils and run `cmd.exe` shell. Other paths (Python3, Node.js, Clink, pip and npm packages) are set from installation OS wide.
 
@@ -61,7 +62,7 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
       * [Win32OpenSSL v1.0.2m Light](https://slproweb.com/products/Win32OpenSSL.html)
       * [pthreadVC2.dll](https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll)
       * msvcr100.dll
-  * [Node.js v8.9.1 LTS](https://nodejs.org/en/download/) - OS wide install
+  * [Node.js v8.9.3 LTS](https://nodejs.org/en/download/) - OS wide install
   * [Python v3.6.3](https://www.python.org/downloads/) - OS wide install
   * [Clink v0.4.8](https://github.com/mridgers/clink/) - OS wide install
   * [FTDI Virtual COM Port Drivers 2.12.28](http://www.ftdichip.com/Drivers/VCP.htm)

@@ -1,3 +1,9 @@
+## [v1.0.1](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.1)(2017-12-11)
+
+  * Add pm2 save during installation
+  * Fix pm2 paths for cleaning during uninstall
+  * Update Node.js to v8.9.3
+
 ## [v1.0.0](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.0)(2017-11-19)
 
   * Add BigClownGateway environment variable
