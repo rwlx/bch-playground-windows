@@ -1,3 +1,9 @@
+## [v1.0.2](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.2)(2017-12-19)
+
+  * Update pm2 install/update commands
+  * Fix Node-RED start
+  * Update DFU driver installation
+
 ## [v1.0.1](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.1)(2017-12-11)
 
   * Add pm2 save during installation

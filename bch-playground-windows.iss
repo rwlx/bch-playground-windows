@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.2"
 
 [Setup]
 SignTool=signtool
@@ -155,7 +155,7 @@ Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Node.js d
 
 ; Start Node-RED service
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"" -v"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"""; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Node-RED service"
 
@@ -163,7 +163,7 @@ Filename: "{pf}\nodejs\node.exe"; \
 Filename: "{pf}\nodejs\node.exe"; \
     Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 save"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Starting Node-RED service"
+    StatusMsg: "Saving PM2 configuration"
 
 ; Wait for Node-RED start
 Filename: {cmd}; Parameters: "/c timeout 15"; Flags: runasoriginaluser runhidden; \
@@ -184,9 +184,9 @@ Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install node-red-dashboard"; \
 
 ; Start Node-RED service again
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start node-red"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 restart node-red"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Start Node-RED service"
+    StatusMsg: "Restart Node-RED service"
 
 ; Update available BigClown firmwares
 Filename: "{pf}\Python36-32\Scripts\bcf.exe"; \
@@ -239,7 +239,7 @@ var
 begin
    Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete bcg', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'stop bcg', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Result := True;
 end;
 
