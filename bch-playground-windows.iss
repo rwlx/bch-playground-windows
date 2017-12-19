@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.0.3"
 
 [Setup]
 SignTool=signtool
@@ -111,13 +111,13 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
 
 ; Install bcf BigClown Firmware Tool
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
-    StatusMsg: "Installing BigClown Firmware Tool, downloading by pip3"; \
-    Flags: runhidden
+    StatusMsg: "Installing BigClown Firmware Tool, downloading by pip3"
+;    Flags: runhidden
 
 ; Install bcf BigClown Gateway
 Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
-    StatusMsg: "Installing BigClown Gateway, downloading by pip3"; \
-    Flags: runhidden
+    StatusMsg: "Installing BigClown Gateway, downloading by pip3"
+;    Flags: runhidden
 
 ; Install Node-RED
 Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install --unsafe-perm -g node-red"; \
@@ -194,6 +194,12 @@ Filename: "{pf}\Python36-32\Scripts\bcf.exe"; \
     StatusMsg: "Updating available BigClown firmwares"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
 
+; Restart bcg service after upgrade
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 restart bcg"; \
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
+    StatusMsg: "Restart bcg service"
+
 ; Wait for Node-RED start
 Filename: {cmd}; Parameters: "/c timeout 10"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Waiting for Node-RED start"
@@ -237,9 +243,10 @@ function InitializeSetup(): Boolean;
 var
    ResultCode: integer;
 begin
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
-   Exec(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'stop bcg', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   ExecAsOriginalUser(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete mosquitto', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   ExecAsOriginalUser(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'delete node-red', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   ExecAsOriginalUser(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'stop bcg', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
+   ExecAsOriginalUser(ExpandConstant('{%APPDATA}\npm\pm2.cmd'), 'kill', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
    Result := True;
 end;
 
@@ -305,9 +312,6 @@ begin
   end;
 end;
 
-[UninstallDelete]
-Type: filesandordirs; Name: "{app}"
-
 [UninstallRun]
 Filename: "{%APPDATA}\npm\pm2"; Parameters: "delete mosquitto"; Flags: runhidden; \
   StatusMsg: "Stopping PM2 service mosquitto"
@@ -317,3 +321,7 @@ Filename: "{%APPDATA}\npm\pm2"; Parameters: "delete bcg"; Flags: runhidden; \
   StatusMsg: "Stopping PM2 service mosquitto"  
 Filename: "{%APPDATA}\npm\pm2"; Parameters: "kill"; Flags: runhidden; \
   StatusMsg: "Stopping PM2"
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}"
+Type: filesandordirs; Name: "{%USERPROFILE}\.pm2"

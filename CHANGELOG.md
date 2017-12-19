@@ -1,3 +1,9 @@
+## [v1.0.3](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.3)(2017-12-20)
+
+  * Update pm2 restart bcg for upgrades
+  * Fix pm2 InitializeSetup
+  * Show pip3 installation of bcf and bcg
+
 ## [v1.0.2](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.2)(2017-12-19)
 
   * Update pm2 install/update commands
