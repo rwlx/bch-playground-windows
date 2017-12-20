@@ -1,3 +1,7 @@
+## [v1.0.5](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.5)(2017-12-20)
+
+  * Add set PYTHONIOENCODING=utf-8 for all Python operation
+
 ## [v1.0.4](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.4)(2017-12-20)
 
   * Update UTF-8 console for all Python operation

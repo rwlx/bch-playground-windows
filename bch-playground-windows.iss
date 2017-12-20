@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.4"
+#define MyAppVersion "1.0.5"
 
 [Setup]
 SignTool=signtool
@@ -110,12 +110,12 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
     StatusMsg: "Installing USB UART FTDI Virtual COM Port Drivers"
 
 ; Install bcf BigClown Firmware Tool
-Filename: "{cmd}"; Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcf"; \
+Filename: "{cmd}"; Parameters: "/c chcp 65001 & set PYTHONIOENCODING=utf-8 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcf"; \
     StatusMsg: "Installing BigClown Firmware Tool, downloading by pip3"
 ;    Flags: runhidden
 
 ; Install bcf BigClown Gateway
-Filename: "{cmd}"; Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcg"; \
+Filename: "{cmd}"; Parameters: "/c chcp 65001 & set PYTHONIOENCODING=utf-8 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcg"; \
     StatusMsg: "Installing BigClown Gateway, downloading by pip3"
 ;    Flags: runhidden
 
@@ -190,7 +190,7 @@ Filename: "{pf}\nodejs\node.exe"; \
 
 ; Update available BigClown firmwares
 Filename: "{cmd}"; \
-    Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\bcf.exe"" update"; \
+    Parameters: "/c chcp 65001 & set PYTHONIOENCODING=utf-8 & ""{pf}\Python36-32\Scripts\bcf.exe"" update"; \
     StatusMsg: "Updating available BigClown firmwares"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
 
