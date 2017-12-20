@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.3"
+#define MyAppVersion "1.0.4"
 
 [Setup]
 SignTool=signtool
@@ -110,12 +110,12 @@ Filename: "{tmp}\CDM21228_Setup.exe"; \
     StatusMsg: "Installing USB UART FTDI Virtual COM Port Drivers"
 
 ; Install bcf BigClown Firmware Tool
-Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcf"; \
+Filename: "{cmd}"; Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcf"; \
     StatusMsg: "Installing BigClown Firmware Tool, downloading by pip3"
 ;    Flags: runhidden
 
 ; Install bcf BigClown Gateway
-Filename: "{pf}\Python36-32\Scripts\pip3.exe"; Parameters: "install --upgrade --no-cache-dir bcg"; \
+Filename: "{cmd}"; Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\pip3.exe"" install --upgrade --no-cache-dir bcg"; \
     StatusMsg: "Installing BigClown Gateway, downloading by pip3"
 ;    Flags: runhidden
 
@@ -189,8 +189,8 @@ Filename: "{pf}\nodejs\node.exe"; \
     StatusMsg: "Restart Node-RED service"
 
 ; Update available BigClown firmwares
-Filename: "{pf}\Python36-32\Scripts\bcf.exe"; \
-    Parameters: "update"; \
+Filename: "{cmd}"; \
+    Parameters: "/c chcp 65001 & ""{pf}\Python36-32\Scripts\bcf.exe"" update"; \
     StatusMsg: "Updating available BigClown firmwares"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
 
