@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.6"
+#define MyAppVersion "1.0.7"
 
 [Setup]
 SignTool=signtool
@@ -16,7 +16,7 @@ UsePreviousAppDir=yes
 DefaultDirName={pf}\BigClown Playground
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-DisableFinishedPage=yes
+DisableFinishedPage=no
 OutputBaseFilename=bch-playground-windows-v{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
@@ -77,6 +77,12 @@ Filename: "{tmp}\{#Python}"; Parameters: "/uninstall /passive /norestart"; \
 ; Install Python3
 Filename: "{tmp}\{#Python}"; Parameters: "/passive ""DefaultAllUsersTargetDir={pf}\Python36-32"" InstallAllUsers=1 PrependPath=1 Include_test=0 Include_tcltk=0 Include_launcher=0"; \
     StatusMsg: "Installing {#Python}"
+
+; Upgrade pip3
+Filename: "{cmd}"; Parameters: "/c chcp 65001 & set PYTHONIOENCODING=utf-8 & ""{pf}\Python36-32\python.exe"" -m pip install -U git+https://github.com/pypa/pip.git@729990c9869148f3f0098a2b2a0c0b92aefb8a69"; \
+    StatusMsg: "Upgrading pip3 from GitHub"
+;    Flags: runhidden
+
 
 ; Uninstall Node.js
 Filename: "msiexec.exe"; Parameters: "/x ""{tmp}\{#Nodejs}"" /passive /norestart"; \
@@ -205,7 +211,9 @@ Filename: {cmd}; Parameters: "/c timeout 10"; Flags: runasoriginaluser runhidden
     StatusMsg: "Waiting for Node-RED start"
 
 ; Navigate web browser to local Node-RED
-Filename: http://localhost:1880/; Flags: shellexec runasoriginaluser
+Filename: http://localhost:1880/; \
+    Description: "Open Node-RED in web browser"; \
+    Flags: postinstall shellexec runasoriginaluser
 
 
 [Registry]
