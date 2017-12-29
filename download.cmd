@@ -19,7 +19,7 @@ copy /Y C:\OpenSSL-Win32\bin\* mosquitto
 rem Node.js 
 powershell -Command "Invoke-WebRequest https://nodejs.org/dist/v8.9.3/node-v8.9.3-x86.msi -OutFile node-v8.9.3-x86.msi"
 rem Python
-powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.6.3/python-3.6.3.exe -OutFile python-3.6.3.exe"
+powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.6.4/python-3.6.4.exe -OutFile python-3.6.4.exe"
 rem FTDI USB CDC/UART drivers
 powershell -Command "Invoke-WebRequest http://www.ftdichip.com/Drivers/CDM/CDM21228_Setup.zip -OutFile CDM21228_Setup.zip"
 if exist CDM21228_Setup.exe del CDM21228_Setup.exe

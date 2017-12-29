@@ -1,4 +1,8 @@
-## [v1.0.7](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.7)(2017-12-28)
+## [v1.0.8](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.8)(2017-12-29)
+
+  * Upgrade Python to 3.6.4
+  
+  ## [v1.0.7](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.7)(2017-12-28)
 
   * Add pip3 upgrade to 10.0.0.dev0 because of UTF-8 encoding errors during simplejson module installation
   * Add dialogue to ask wheather to open Node-RED in browser after installation

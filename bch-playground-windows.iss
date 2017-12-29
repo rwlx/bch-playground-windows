@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.7"
+#define MyAppVersion "1.0.8"
 
 [Setup]
 SignTool=signtool
@@ -44,7 +44,7 @@ Source: "download\msvcr100.dll"; DestDir: "{app}\mosquitto"; Flags: ignoreversio
 #define Nodejs "node-v8.9.3-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
 
-#define Python "python-3.6.3.exe"
+#define Python "python-3.6.4.exe"
 Source: "{#Python}"; DestDir: "{tmp}"
 
 #define Clink "clink_0.4.8_setup.exe"
