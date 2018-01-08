@@ -17,7 +17,7 @@ rem copy C:\Windows\System32\libeay32.dll mosquitto
 copy /Y C:\OpenSSL-Win32\*.dll mosquitto
 copy /Y C:\OpenSSL-Win32\bin\* mosquitto
 rem Node.js 
-powershell -Command "Invoke-WebRequest https://nodejs.org/dist/v8.9.3/node-v8.9.3-x86.msi -OutFile node-v8.9.3-x86.msi"
+powershell -Command "Invoke-WebRequest https://nodejs.org/dist/v8.9.4/node-v8.9.4-x86.msi -OutFile node-v8.9.4-x86.msi"
 rem Python
 powershell -Command "Invoke-WebRequest https://www.python.org/ftp/python/3.6.4/python-3.6.4.exe -OutFile python-3.6.4.exe"
 rem FTDI USB CDC/UART drivers
@@ -25,4 +25,4 @@ powershell -Command "Invoke-WebRequest http://www.ftdichip.com/Drivers/CDM/CDM21
 if exist CDM21228_Setup.exe del CDM21228_Setup.exe
 "%ProgramFiles%\7-Zip\7z.exe" x CDM21228_Setup.zip
 rem Clink
-powershell -Command "Invoke-WebRequest https://github.com/mridgers/clink/releases/download/0.4.8/clink_0.4.8_setup.exe -OutFile clink_0.4.8_setup.exe"
+powershell -Command "Invoke-WebRequest https://github.com/mridgers/clink/releases/download/0.4.9/clink_0.4.9_setup.exe -OutFile clink_0.4.9_setup.exe"

@@ -1,5 +1,5 @@
 #define MyAppName "BigClown Playground"
-#define MyAppVersion "1.0.8"
+#define MyAppVersion "1.0.9"
 
 [Setup]
 SignTool=signtool
@@ -41,13 +41,13 @@ Source: "script\sub.cmd"; DestDir: "{app}\script"; Flags: ignoreversion
 Source: "mosquitto\*"; DestDir: "{app}\mosquitto"; Flags: ignoreversion recursesubdirs
 Source: "download\msvcr100.dll"; DestDir: "{app}\mosquitto"; Flags: ignoreversion
 
-#define Nodejs "node-v8.9.3-x86.msi"
+#define Nodejs "node-v8.9.4-x86.msi"
 Source: "{#Nodejs}"; DestDir: "{tmp}"
 
 #define Python "python-3.6.4.exe"
 Source: "{#Python}"; DestDir: "{tmp}"
 
-#define Clink "clink_0.4.8_setup.exe"
+#define Clink "clink_0.4.9_setup.exe"
 Source: "{#Clink}"; DestDir: "{tmp}"
 
 ; USB UART FTDI Virtual COM Port Drivers
@@ -126,48 +126,52 @@ Filename: "{cmd}"; Parameters: "/c chcp 65001 & set PYTHONIOENCODING=utf-8 & ""{
 ;    Flags: runhidden
 
 ; Install Node-RED
-Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install --unsafe-perm -g node-red"; \
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: """{pf}\nodejs\node_modules\npm\bin\npm-cli.js"" install --unsafe-perm -g node-red"; \
     StatusMsg: "Installing Node-RED (it may take a few minutes, downloading by npm)"; \
-    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden
+    WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
+; runhidden
 
 ; Install PM2
-Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install -g pm2"; \
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: """{pf}\nodejs\node_modules\npm\bin\npm-cli.js"" install --unsafe-perm -g pm2"; \
     StatusMsg: "Installing PM2 (it may take a few minutes, downloading by npm)"; \
-    WorkingDir: "{%USERPROFILE}";Flags: runasoriginaluser runhidden
+    WorkingDir: "{%USERPROFILE}";Flags: runasoriginaluser
+; runhidden
 
 ; Enable Windows firewall for Mosquitto
 ;https://technet.microsoft.com/en-us/library/dd734783(v=ws.10).aspx
 Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Mosquitto"; \
-    StatusMsg: "Delete Windows firewall rules for Mosquitto"; Flags: runhidden
+    StatusMsg: "Deleting Windows firewall rules for Mosquitto"; Flags: runhidden
 Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Mosquitto dir=in action=allow program=""{app}\mosquitto\mosquitto.exe"" protocol=tcp profile=any edge=deferuser"; \
-    StatusMsg: "Enable Windows firewall for Mosquitto"; \
+    StatusMsg: "Enabling Windows firewall for Mosquitto"; \
     Flags: runhidden
 ; netsh advfirewall firewall show rule name=Mosquitto
 
 ; Start Mosquitto service
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" start ""{app}\mosquitto\mosquitto.exe"" --name mosquitto"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Mosquitto MQTT broker service";
 
 ; Enable Windows firewall for Node.js Node-RED
 Filename: "netsh.exe"; Parameters: "advfirewall firewall delete rule name=Node.js"; \
-    StatusMsg: "Delete Windows firewall rules for Node.js"; Flags: runhidden
+    StatusMsg: "Deleting Windows firewall rules for Node.js"; Flags: runhidden
 Filename: "netsh.exe"; Parameters: "advfirewall firewall add rule name=Node.js dir=in action=allow program=""{pf}\nodejs\node.exe"" protocol=tcp profile=any edge=deferuser"; \
-    StatusMsg: "Enable Windows firewall for Node.js"; \
+    StatusMsg: "Enabling Windows firewall for Node.js"; \
     Flags: runhidden
 ;netsh advfirewall firewall show rule name=Node.js
 ;netsh advfirewall firewall show rule name="Node.js: Server-side JavaScript"
 
 ; Start Node-RED service
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"""; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" start ""{pf}\nodejs\node.exe"" --name node-red -- ""{%APPDATA}\npm\node_modules\node-red\red.js"""; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Starting Node-RED service"
 
 ; Save PM2 configuration
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 save"; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" save"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
     StatusMsg: "Saving PM2 configuration"
 
@@ -178,21 +182,23 @@ Filename: {cmd}; Parameters: "/c timeout 15"; Flags: runasoriginaluser runhidden
 ; Stop Node-RED service for Node-RED-Dashboard installation
 ; ~/.node-red directory is created now by first Node-RED start
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 stop node-red"; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" stop node-red"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Stop Node-RED service for Node-RED-Dashboard installation"
+    StatusMsg: "Stopping Node-RED service for Node-RED-Dashboard installation"
 
 ; Install Node-RED-Dashboard
-Filename: "{pf}\nodejs\npm.cmd"; Parameters: "install node-red-dashboard"; \
+Filename: "{pf}\nodejs\node.exe"; \
+    Parameters: """{pf}\nodejs\node_modules\npm\bin\npm-cli.js"" install node-red-dashboard"; \
     StatusMsg: "Installing Node-RED-Dashboard (it may take a few minutes, downloading by npm)"; \
     WorkingDir: "{%USERPROFILE}\.node-red"; \
-    Flags: runasoriginaluser runhidden
+    Flags: runasoriginaluser
+; runhidden
 
 ; Start Node-RED service again
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 restart node-red"; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" restart node-red"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Restart Node-RED service"
+    StatusMsg: "Restarting Node-RED service"
 
 ; Update available BigClown firmwares
 Filename: "{cmd}"; \
@@ -200,11 +206,11 @@ Filename: "{cmd}"; \
     StatusMsg: "Updating available BigClown firmwares"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser
 
-; Restart bcg service after upgrade
+; Restart bcg service (for case when installer used as upgrade)
 Filename: "{pf}\nodejs\node.exe"; \
-    Parameters: "{%APPDATA}\npm\node_modules\pm2\bin\pm2 restart bcg"; \
+    Parameters: """{%APPDATA}\npm\node_modules\pm2\bin\pm2"" restart bcg"; \
     WorkingDir: "{%USERPROFILE}"; Flags: runasoriginaluser runhidden; \
-    StatusMsg: "Restart bcg service"
+    StatusMsg: "Restarting bcg service"
 
 ; Wait for Node-RED start
 Filename: {cmd}; Parameters: "/c timeout 10"; Flags: runasoriginaluser runhidden; \

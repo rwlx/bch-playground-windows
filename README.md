@@ -62,9 +62,9 @@ Defines [HKLM](https://www.google.com/search?q=hklm) environment variables:
       * [Win32OpenSSL v1.0.2m Light](https://slproweb.com/products/Win32OpenSSL.html)
       * [pthreadVC2.dll](https://www.sourceware.org/pub/pthreads-win32/dll-latest/dll/x86/pthreadVC2.dll)
       * msvcr100.dll
-  * [Node.js v8.9.3 LTS](https://nodejs.org/en/download/) - OS wide install
+  * [Node.js v8.9.4 LTS](https://nodejs.org/en/download/) - OS wide install
   * [Python v3.6.4](https://www.python.org/downloads/) - OS wide install
-  * [Clink v0.4.8](https://github.com/mridgers/clink/) - OS wide install
+  * [Clink v0.4.9](https://github.com/mridgers/clink/) - OS wide install
   * [FTDI Virtual COM Port Drivers 2.12.28](http://www.ftdichip.com/Drivers/VCP.htm)
   * [dfu-util-static v0.8](https://sourceforge.net/projects/dfu-util/files/dfu-util-0.8-binaries/win32-mingw32/)
     * `dfu\dfu-util.exe`

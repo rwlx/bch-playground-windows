@@ -1,3 +1,11 @@
+## [v1.0.9](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.9)(2018-01-08)
+
+* Update npm execution without intermediate cmd during install
+* Update npm install to be visible (remove runhidden)
+* Update quotes around all paths with possible space inside passed as args
+* Upgrade Node.js to v8.9.4
+* Upgrade Clink to v0.4.9
+
 ## [v1.0.8](https://github.com/bigclownlabs/bch-playground-windows/releases/tag/v1.0.8)(2017-12-29)
 
   * Upgrade Python to 3.6.4
