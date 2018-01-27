@@ -15,7 +15,7 @@ Hub playground is based on:
   * The MQTT broker [Mosquitto](https://mosquitto.org) (with client tools)
   * The web-based tool [Node-RED](https://nodered.org) for automation flows
   * The process manager [PM2](http://pm2.keymetrics.io) to start the components automatically on boot
-  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-usb-gateway/) for BigClown [USB Dongle](https://shop.bigclown.com/products/usb-dongle) - Python application for MQTT/gateway bridging
+  * [BigClown Hub Service](https://github.com/bigclownlabs/bch-gateway/) for BigClown [USB Dongle](https://shop.bigclown.com/usb-dongle) - Python application for MQTT/gateway bridging
   * [BigClown Firmware Tool](https://github.com/bigclownlabs/bch-firmware-tool/)
 
 Install destination directories are in `%ProgramFiles(x86)%` on 64bit OS or in `%ProgramFiles%` on 32bit OS:
